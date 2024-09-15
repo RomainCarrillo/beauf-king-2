@@ -1,0 +1,30 @@
+version: '3.1'
+name: beauf-king
+services:
+  db:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_DATABASE: 'testdatabase'
+      MYSQL_USER: 'testuser'
+      MYSQL_PASSWORD: 'Sc00b!d00'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - "./config/my.conf:/etc/mysql/conf.d/config-file.cnf"
+      - "./data:/var/lib/mysql:rw"
+
+  beauf-king:
+    image: beauf-king-api
+    ports:
+      - 9292:8080
+    environment:
+      - spring.datasource.url=jdbc:mysql://db:3306/testdatabase?createDatabaseIfNotExist=true
+      - spring.datasource.driver-class-name=com.mysql.jdbc.Driver
+      - spring.datasource.username=testuser
+      - spring.datasource.password=Sc00b!d00
+    depends_on:
+      - db

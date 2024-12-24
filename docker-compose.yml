@@ -2,28 +2,26 @@ version: '3.1'
 name: beauf-king
 services:
   db:
-    image: mysql:latest
+    image: postgres:latest
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: 'root'
-      MYSQL_DATABASE: 'testdatabase'
-      MYSQL_USER: 'testuser'
-      MYSQL_PASSWORD: 'Sc00b!d00'
+      POSTGRES_DB: 'testdatabase'
+      POSTGRES_USER: 'testuser'
+      POSTGRES_PASSWORD: 'Sc00b!d00'
     ports:
-      - '3306:3306'
+      - '5432:5432'
     expose:
-      - '3306'
+      - '5432'
     volumes:
-      - "./config/my.conf:/etc/mysql/conf.d/config-file.cnf"
-      - "./data:/var/lib/mysql:rw"
+      - "./data:/var/lib/postgresql/data:rw"
 
   beauf-king:
-    image: beauf-king-api
+    image: beauf-king-service
     ports:
       - 9292:8080
     environment:
-      - spring.datasource.url=jdbc:mysql://db:3306/testdatabase?createDatabaseIfNotExist=true
-      - spring.datasource.driver-class-name=com.mysql.jdbc.Driver
+      - spring.datasource.url=jdbc:postgresql://db:5432/testdatabase
+      - spring.datasource.driver-class-name=org.postgresql.Driver
       - spring.datasource.username=testuser
       - spring.datasource.password=Sc00b!d00
     depends_on:

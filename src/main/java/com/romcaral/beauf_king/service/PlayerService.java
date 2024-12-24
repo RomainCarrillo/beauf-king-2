@@ -1,45 +1,22 @@
 package com.romcaral.beauf_king.service;
 
 import java.util.List;
-import java.util.UUID;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import com.romcaral.beauf_king.domain.Player;
-import com.romcaral.beauf_king.repository.PlayerRepository;
 
-@Service
-public class PlayerService {
+public interface PlayerService {
 
-    @Autowired
-    private PlayerRepository playerRepository;
+	Player createPlayer(Player player);
 
-    public Player createPlayer(Player player) {
-        return playerRepository.save(player);
-    }
+	List<Player> getAllPlayers();
 
-    public List<Player> getAllPlayers() {
-        return playerRepository.findAll();
-    }
+	Player getPlayerById(Long id);
 
-    public Player getPlayerById(UUID id) {
-        return playerRepository.findById(id).orElse(null);
-    }
+	Player updatePlayer(Long id, Player player);
 
-    public Player updatePlayer(UUID id, Player player) {
-        player.setId(id);
-        return playerRepository.save(player);
-    }
+	Player votePlayer(Long id);
 
-    public List<Player> votePlayer(UUID id) {
-    	Player player = playerRepository.findById(id).orElse(null);
-    	player.setScore(player.getScore() + 1);
-    	playerRepository.save(player);
-    	return this.getAllPlayers();
-    }
+	void deletePlayer(Long id);
 
-    public void deletePlayer(UUID id) {
-        playerRepository.deleteById(id);
-    }
+	Player getPlayerWithHigherScore();
 }

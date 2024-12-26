@@ -8,4 +8,7 @@ import com.romcaral.beauf_king.domain.Player;
 
 @Repository
 public interface PlayerRepository extends JpaRepository<Player, Long> {
+
+
+	public Player findByName(String name);
 }

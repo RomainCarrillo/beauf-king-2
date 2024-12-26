@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.introspect.TypeResolutionContext.Empty;
 import com.romcaral.beauf_king.domain.Player;
 import com.romcaral.beauf_king.repository.PlayerRepository;
 
@@ -23,6 +24,8 @@ public class PlayerServiceImpl implements PlayerService {
     public Player createPlayer(Player player) {
         return playerRepository.save(player);
     }
+    
+	private Player defaultPlayer = Player.builder().name("En attente...").score(0).imageName("Default player").imagePath("images/logo.png").build();
 
     @Override
     public List<Player> getAllPlayers() {
@@ -31,8 +34,8 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public Player getPlayerById(Long id) {
-        return playerRepository.findById(id).orElse(null);
+    public Player getPlayerById(Long i) {
+        return playerRepository.findById(i).orElse(null);
     }
 
     @Override
@@ -58,7 +61,20 @@ public class PlayerServiceImpl implements PlayerService {
     	List<Player> players = playerRepository.findAll();
     	Optional<Player> player = players.stream()
     		    .sorted(Comparator.comparingInt(Player::getScore).reversed()) // Descending order
-    		    .findFirst();    	log.info("Player with higher score is : {}", player.get().getName());
+    		    .findFirst();
+    	if(player.isEmpty()) {
+    		log.info("No best player found return default player");
+    		return defaultPlayer;
+    	}
+    	log.info("Found best player : {}", player.get().getName());
 		return player.get();
 	}
+
+	@Override
+	public Player getPlayerByName(String name) {
+		return playerRepository.findByName(name);
+	}
+
 }
+
+

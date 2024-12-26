@@ -16,6 +16,8 @@ public interface PlayerService {
 
 	Player votePlayer(Long id);
 
+	Player getPlayerByName(String name);
+
 	void deletePlayer(Long id);
 
 	Player getPlayerWithHigherScore();

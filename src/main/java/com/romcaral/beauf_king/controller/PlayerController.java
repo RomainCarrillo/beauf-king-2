@@ -5,17 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.romcaral.beauf_king.domain.Player;
 import com.romcaral.beauf_king.service.PlayerServiceImpl;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -26,12 +23,16 @@ public class PlayerController {
 	private PlayerServiceImpl playerService;
 
 	@GetMapping("players")
-	public String getAllPlayers(Model model) {
+	public String getAllPlayers(Model model, HttpServletResponse response) {
 		log.info("Loading all players for view");
-		List<Player> playersList = playerService.getAllPlayers();
+	    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+	    response.setHeader("Pragma", "no-cache");
+	    response.setHeader("Expires", "0");
 		Player bestPlayer = playerService.getPlayerWithHigherScore();
-		model.addAttribute("players", playersList); // Add players list to the model for Thymeleaf
+		List<Player> playersList = playerService.getAllPlayers();
+		log.info("best player from controller : {}", bestPlayer.toString());
 		model.addAttribute("best", bestPlayer);
+		model.addAttribute("players", playersList); // Add players list to the model for Thymeleaf
 		return "index"; // Return the view name, e.g., players.html
 	}
 

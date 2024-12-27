@@ -30,9 +30,6 @@ public class PlayerServiceImpl implements PlayerService {
 	@Override
 	public List<Player> getAllPlayers() {
 		List<Player> players = playerRepository.findAll();
-		players = players.stream().sorted(Comparator.comparingInt(Player::getScore).reversed()) // Sort players by score																								// in descending order
-				.skip(1) // Skip the first player (highest score)
-				.toList(); // Collect the remaining players into a list
 		return players;
 	}
 
@@ -58,7 +55,7 @@ public class PlayerServiceImpl implements PlayerService {
 	public void deletePlayer(Long id) {
 		playerRepository.deleteById(id);
 	}
-
+	
 	@Override
 	public Player getPlayerWithHigherScore() {
 		Optional<Player> player = playerRepository.getPlayerWithHigherScore();

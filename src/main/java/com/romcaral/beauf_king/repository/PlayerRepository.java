@@ -1,5 +1,6 @@
 package com.romcaral.beauf_king.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,4 +16,7 @@ public interface PlayerRepository extends JpaRepository<Player, Long> {
 
 	@Query(value="SELECT * FROM player ORDER BY score DESC LIMIT 1", nativeQuery=true)
 	public Optional<Player> getPlayerWithHigherScore();
+
+	@Query(value="SELECT * FROM player ORDER BY score DESC LIMIT 1 OFFSET 1", nativeQuery=true)
+	public List<Player> getAllPlayersExceptFirstOrderByScore();
 }

@@ -1,5 +1,6 @@
 package com.romcaral.beauf_king.controller;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +29,11 @@ public class PlayerController {
 	    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
 	    response.setHeader("Pragma", "no-cache");
 	    response.setHeader("Expires", "0");
-		Player bestPlayer = playerService.getPlayerWithHigherScore();
-		List<Player> playersList = playerService.getAllPlayers();
-		log.info("best player from controller : {}", bestPlayer.toString());
+	    List<Player> playersList = playerService.getAllPlayers();
+		Player bestPlayer = playersList.get(0);
+		playersList.remove(0);
+		Collections.reverse(playersList);
+		log.info("best player : {}", bestPlayer.toString());
 		model.addAttribute("best", bestPlayer);
 		model.addAttribute("players", playersList); // Add players list to the model for Thymeleaf
 		return "index"; // Return the view name, e.g., players.html

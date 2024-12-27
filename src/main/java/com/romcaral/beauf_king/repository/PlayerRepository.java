@@ -17,6 +17,6 @@ public interface PlayerRepository extends JpaRepository<Player, Long> {
 	@Query(value="SELECT * FROM player ORDER BY score DESC LIMIT 1", nativeQuery=true)
 	public Optional<Player> getPlayerWithHigherScore();
 
-	@Query(value="SELECT * FROM player ORDER BY score DESC LIMIT 1 OFFSET 1", nativeQuery=true)
+	@Query(value="SELECT * FROM player ORDER BY score DESC OFFSET 1", nativeQuery=true)
 	public List<Player> getAllPlayersExceptFirstOrderByScore();
 }

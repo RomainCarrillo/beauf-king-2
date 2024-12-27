@@ -29,10 +29,8 @@ public class PlayerController {
 	    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
 	    response.setHeader("Pragma", "no-cache");
 	    response.setHeader("Expires", "0");
-	    List<Player> playersList = playerService.getAllPlayers();
-		Player bestPlayer = playersList.get(0);
-		playersList.remove(0);
-		Collections.reverse(playersList);
+	    Player bestPlayer = playerService.getPlayerWithHigherScore();
+	    List<Player> playersList = playerService.getOthersPlayers();
 		log.info("best player : {}", bestPlayer.toString());
 		model.addAttribute("best", bestPlayer);
 		model.addAttribute("players", playersList); // Add players list to the model for Thymeleaf

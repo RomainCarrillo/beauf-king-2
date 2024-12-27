@@ -3,7 +3,6 @@ package com.romcaral.beauf_king.service;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -62,10 +61,7 @@ public class PlayerServiceImpl implements PlayerService {
 
 	@Override
 	public Player getPlayerWithHigherScore() {
-		List<Player> players = playerRepository.findAll();
-		Optional<Player> player = players.stream().sorted(Comparator.comparingInt(Player::getScore).reversed()) // Descending
-																												// order
-				.findFirst();
+		Optional<Player> player = playerRepository.getPlayerWithHigherScore();
 		if (player.isEmpty()) {
 			log.info("No best player found return default player");
 			return defaultPlayer;

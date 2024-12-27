@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.romcaral.beauf_king.domain.Player;
@@ -29,6 +30,7 @@ public class PlayerServiceImpl implements PlayerService {
 			.imagePath("images/logo.png").build();
 
 	@Override
+	@Cacheable(value = "allPlayers")
 	public List<Player> getAllPlayers() {
 		List<Player> players = playerRepository.findAll();
 		players = players.stream().sorted(Comparator.comparingInt(Player::getScore).reversed()) // Sort players by score																								// in descending order
@@ -60,7 +62,9 @@ public class PlayerServiceImpl implements PlayerService {
 		playerRepository.deleteById(id);
 	}
 
+	
 	@Override
+	@Cacheable(value = "bestPlayer")
 	public Player getPlayerWithHigherScore() {
 		List<Player> players = playerRepository.findAll();
 		Optional<Player> player = players.stream().sorted(Comparator.comparingInt(Player::getScore).reversed()) // Descending

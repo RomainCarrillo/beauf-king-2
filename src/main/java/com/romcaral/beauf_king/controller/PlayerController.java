@@ -25,11 +25,11 @@ public class PlayerController {
 	@GetMapping("players")
 	public String getAllPlayers(Model model, HttpServletResponse response) {
 		log.info("Loading all players for view");
+		Player bestPlayer = playerService.getPlayerWithHigherScore();
+		List<Player> playersList = playerService.getAllPlayers();
 	    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
 	    response.setHeader("Pragma", "no-cache");
 	    response.setHeader("Expires", "0");
-		Player bestPlayer = playerService.getPlayerWithHigherScore();
-		List<Player> playersList = playerService.getAllPlayers();
 		log.info("best player from controller : {}", bestPlayer.toString());
 		model.addAttribute("best", bestPlayer);
 		model.addAttribute("players", playersList); // Add players list to the model for Thymeleaf

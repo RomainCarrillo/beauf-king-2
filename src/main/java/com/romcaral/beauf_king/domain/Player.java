@@ -1,6 +1,8 @@
 package com.romcaral.beauf_king.domain;
 
 
+import java.io.Serializable;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,7 +19,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor // Required for JPA entities
 @AllArgsConstructor // Required for Builder pattern with @Data
-public class Player {
+public class Player implements Serializable  {
+
+	/**
+	 * need for serialization
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

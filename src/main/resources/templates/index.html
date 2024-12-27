@@ -27,7 +27,8 @@ body {
 		<div class="row justify-content-center text-align-center">
 			<div class="col-lg-4">
 				<!-- logo -->
-				<img alt="logo" src="images/logo.png" class="d-block mx-auto" width="80%">
+				<img alt="logo" src="images/logo.png" class="d-block mx-auto"
+					width="80%">
 			</div>
 		</div>
 	</div>
@@ -41,37 +42,61 @@ body {
 
 				<!-- Blockquote -->
 				<blockquote class="blockquote mb-4">
-					<p>Qui sera le plus gros beauf ?</p>
+					<p>
+						<em>Qui est le plus gros des beaufs ?</em>
+					</p>
 				</blockquote>
 			</div>
 		</div>
 	</div>
 
 	<!-- Best Beauf Section -->
-	<div class="container mb-5">
+	<h2 class="mb-3" style="color: #f60000;">Le roi des beaufs</h2>
+	<div class="container mb-5"
+		style="background-image: url('images/crown.png'); background-size: cover; background-position: center; background-repeat: no-repeat; padding: 20px;">
 		<div class="row justify-content-center">
-			<div class="col-lg-4">
-				<h2 class="mb-3">Plus gros beauf du moment :</h2>
+			<div class="col-lg-4 text-center">
 				<img class="rounded-circle mb-3" width="140" height="140"
 					alt="best player image" th:src="${best.imagePath}">
-				<h2 th:text="${best.name}">Best beauf</h2>
-				<p th:text="${best.score} + ' points'">score</p>
+				<div
+					style="display: flex; align-items: center; justify-content: center; gap: 10px; margin: 1em;">
+					<h2 th:text="${best.name}" style="margin: 0;">Best beauf</h2>
+					<p th:text="${best.score}"
+						style="background-color: #f60000; color: white; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; margin: 0; padding: 1em;">
+						<b>score</b>
+					</p>
+				</div>
+				<form action="#" th:action="@{'player/vote/' + ${best.id}}"
+					method="post">
+					<input type="submit"
+						style="background-color: #f60000; color: white; margin: 1em;"
+						class="btn btn-secondary" value="Vote pour le king">
+				</form>
 			</div>
 		</div>
 	</div>
 
 	<!-- Player List Section -->
 	<div class="container">
-		<h3 class="mb-4">Qui a dit une connerie ?</h3>
+		<h3 class="mb-4">Les autres beaufs</h3>
 		<div class="row justify-content-center">
 			<div th:each="player : ${players}" class="col-lg-4 mb-4 text-center">
 				<img class="rounded-circle mb-2" width="140" height="140"
 					alt="player image" th:src="${player.imagePath}">
-				<h2 class="fw-normal mb-1" th:text="${player.name}">Name</h2>
-				<p th:text="${player.score} + ' points'">Score</p>
-					<form  action="#" th:action="@{'player/vote/' + ${player.id}}" method="post">
-					<input type="submit" class="btn btn-secondary" value="submit">
-					</form>
+				<div
+					style="display: flex; align-items: center; justify-content: center; gap: 10px; margin: 1em;">
+					<h2 th:text="${player.name}" style="margin: 0;">Player</h2>
+					<p th:text="${player.score}"
+						style="background-color: #0c6bba; color: white; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; margin: 0; padding: 1em;">
+						<b>score</b>
+					</p>
+				</div>
+				<form action="#" th:action="@{'player/vote/' + ${player.id}}"
+					method="post">
+					<input type="submit"
+						style="background-color: #0c6bba; color: white; margin: 1em;"
+						class="btn btn-secondary" value="Voter">
+				</form>
 			</div>
 		</div>
 	</div>

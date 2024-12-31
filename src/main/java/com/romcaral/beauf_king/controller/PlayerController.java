@@ -23,7 +23,7 @@ public class PlayerController {
 	@Autowired
 	private PlayerServiceImpl playerService;
 
-	@GetMapping("players")
+	@GetMapping({"players", "/"})
 	public String getAllPlayers(Model model, HttpServletResponse response) {
 		log.info("Loading all players for view");
 	    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
